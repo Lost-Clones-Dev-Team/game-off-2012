@@ -1,13 +1,13 @@
 package lostclones.images;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.net.URL;
 
 import javax.imageio.ImageIO;
 
+import lostclones.LostClonesApplet;
+
 public class Texture {
-    private static String currentDir = System.getProperty("user.dir");
     private int tileWidth;
     private int tileHeight;
     private BufferedImage image = null;
@@ -17,9 +17,10 @@ public class Texture {
         tileHeight = newTileHeight;
 
         try {
-            image = ImageIO.read(new File(currentDir + fileName));
-        } catch (IOException e) {
-            System.err.println("File: " + currentDir + fileName + " could not be found.");
+            URL url = LostClonesApplet.class.getResource("resources/images/" + fileName);
+            image = ImageIO.read(url);
+        } catch (Exception e) {
+            System.err.println("File: " + fileName + " could not be found.");
         }
     }
 
