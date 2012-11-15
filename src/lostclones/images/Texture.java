@@ -1,11 +1,6 @@
 package lostclones.images;
 
 import java.awt.image.BufferedImage;
-import java.net.URL;
-
-import javax.imageio.ImageIO;
-
-import lostclones.LostClonesApplet;
 
 public class Texture {
     private int tileWidth;
@@ -16,12 +11,7 @@ public class Texture {
         tileWidth = newTileWidth;
         tileHeight = newTileHeight;
 
-        try {
-            URL url = LostClonesApplet.class.getResource("resources/images/" + fileName);
-            image = ImageIO.read(url);
-        } catch (Exception e) {
-            System.err.println("File: " + fileName + " could not be found.");
-        }
+        image = TextureManager.getInstance().getImage(fileName);
     }
 
     public BufferedImage getSprite(int subTileX, int subTileY) {
