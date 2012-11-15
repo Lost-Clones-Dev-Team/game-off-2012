@@ -9,6 +9,7 @@ public class WindowManager {
     Window window;
 
     public WindowManager(String window) {
+
         if (window.equals("mainMenu")) {
             loadMainMenu();
         } else if (window.equals("gameMap")) {

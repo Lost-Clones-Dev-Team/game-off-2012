@@ -1,21 +1,21 @@
 package lostclones;
 
+import java.applet.Applet;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
-
-import javax.swing.JApplet;
 
 import lostclones.images.TextureManager;
 import lostclones.map.Maps;
 import lostclones.map.Tile;
 import lostclones.window.WindowManager;
 
-public class LostClonesApplet extends JApplet implements Runnable{
+public class LostClonesApplet extends Applet implements Runnable{
 
     private static final long serialVersionUID = -5282583319538086367L;
     private static final int WINDOW_WIDTH = 800;
     private static final int WINDOW_HEIGHT = 600;
-    private static final int FPS = 30;
+    private static final int FPS = 120;
     private Image doubleBufferImage;
     private Graphics doubleBufferGraphics;
     private Thread thread;
@@ -24,6 +24,8 @@ public class LostClonesApplet extends JApplet implements Runnable{
 
     public void init() {
         TextureManager.getInstance().setApplet(this);
+
+        setBackground(Color.WHITE);
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 
         Maps.getInstance().setupMaps();
@@ -82,6 +84,7 @@ public class LostClonesApplet extends JApplet implements Runnable{
         */
     }
 
+    @Override
     public void paint(Graphics g) {
         windowManager.draw(g);
     }
