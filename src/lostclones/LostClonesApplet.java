@@ -51,8 +51,6 @@ public class LostClonesApplet extends JApplet implements Runnable{
 
             if (times >= 15) {
                 Maps.getInstance().getMap("first").setTile(5, 5, new Tile("grass2", 5, 5));
-            }
-            if (times >= 16) {
                 Maps.getInstance().getMap("first").setTile(6, 5, new Tile("grass2", 6, 5));
             }
         }

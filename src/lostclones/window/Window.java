@@ -12,13 +12,8 @@ public abstract class Window extends JPanel{
     private static final long serialVersionUID = 8072790631856631621L;
 
     public Window() {
-
-        setBackground(Color.ORANGE);
         setSize(800,600);
         setVisible(true);
-        setBackground(Color.MAGENTA);
-
-
     }
 
     public void setContentPane(Container newContentPane) {
