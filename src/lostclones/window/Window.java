@@ -1,8 +1,35 @@
 package lostclones.window;
 
+import java.awt.Color;
+import java.awt.Container;
 import java.awt.Graphics;
 
-public abstract class Window {
+import javax.swing.JPanel;
 
-    abstract void draw(Graphics g);
+public abstract class Window extends JPanel{
+    Container contentPane;
+
+    private static final long serialVersionUID = 8072790631856631621L;
+
+    public Window() {
+
+        setBackground(Color.ORANGE);
+        setSize(800,600);
+        setVisible(true);
+        setBackground(Color.MAGENTA);
+
+
+    }
+
+    public void setContentPane(Container newContentPane) {
+        if (newContentPane != null) {
+            contentPane = newContentPane;
+        }
+    }
+
+    public void paintComponent(Graphics g) {
+        g.setColor(Color.RED);
+        g.drawRect(50, 50, 200, 150);
+    }
+
 }

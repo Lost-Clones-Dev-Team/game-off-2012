@@ -7,6 +7,9 @@ import java.awt.image.BufferedImage;
 import lostclones.map.LCMap;
 
 public class GameMap extends Window{
+
+    private static final long serialVersionUID = 310643392951253204L;
+
     LCMap map;
 
     BufferedImage buffer;
@@ -19,8 +22,10 @@ public class GameMap extends Window{
         map = newMap;
     }
 
-    @Override
-    void draw(Graphics g) {
+
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
         if (map != null) {
 
             int mapWidth = map.getWidth();

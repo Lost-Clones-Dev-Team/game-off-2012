@@ -1,23 +1,20 @@
 package lostclones;
 
-import java.applet.Applet;
 import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Image;
+
+import javax.swing.JApplet;
 
 import lostclones.images.TextureManager;
 import lostclones.map.Maps;
 import lostclones.map.Tile;
 import lostclones.window.WindowManager;
 
-public class LostClonesApplet extends Applet implements Runnable{
+public class LostClonesApplet extends JApplet implements Runnable{
 
     private static final long serialVersionUID = -5282583319538086367L;
     private static final int WINDOW_WIDTH = 800;
     private static final int WINDOW_HEIGHT = 600;
-    private static final int FPS = 120;
-    private Image doubleBufferImage;
-    private Graphics doubleBufferGraphics;
+    private static final int FPS = 60;
     private Thread thread;
 
     private WindowManager windowManager;
@@ -29,7 +26,8 @@ public class LostClonesApplet extends Applet implements Runnable{
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 
         Maps.getInstance().setupMaps();
-        windowManager = new WindowManager("gameMap");
+
+        windowManager = new WindowManager(this, "gameMap");
     }
 
     public void start() {
@@ -42,6 +40,7 @@ public class LostClonesApplet extends Applet implements Runnable{
         int times = 0;
         // thread info
         while(true) {
+
             repaint();
             try {
                 Thread.sleep(1000/FPS);
@@ -59,33 +58,7 @@ public class LostClonesApplet extends Applet implements Runnable{
         }
     }
 
-    @Override
-    public void update(Graphics g) {
-        if (doubleBufferImage == null) {
-            doubleBufferImage = createImage(WINDOW_WIDTH, WINDOW_HEIGHT);
-            doubleBufferGraphics = doubleBufferImage.getGraphics();
-        }
-
-        doubleBufferGraphics.setColor(getBackground());
-        doubleBufferGraphics.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-        doubleBufferGraphics.setColor(getForeground());
-        paint(doubleBufferGraphics);
-        g.drawImage(doubleBufferImage, 0, 0, this);
-    }
-
     public void stop() {
         System.exit(0);
-        /*
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        */
-    }
-
-    @Override
-    public void paint(Graphics g) {
-        windowManager.draw(g);
     }
 }

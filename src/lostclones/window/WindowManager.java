@@ -1,26 +1,31 @@
 package lostclones.window;
 
-import java.awt.Graphics;
+import java.awt.Container;
 
+import lostclones.LostClonesApplet;
 import lostclones.map.LCMap;
 import lostclones.map.Maps;
 
 public class WindowManager {
     Window window;
+    LostClonesApplet applet;
+    Container contentPane;
 
-    public WindowManager(String window) {
+    public WindowManager(LostClonesApplet newApplet, String windowToLoad) {
+        applet = newApplet;
+        contentPane = applet.getContentPane();
+        contentPane.setLayout(null);
 
-        if (window.equals("mainMenu")) {
+        if (windowToLoad.equals("mainMenu")) {
             loadMainMenu();
-        } else if (window.equals("gameMap")) {
+        } else if (windowToLoad.equals("gameMap")) {
             loadGameMap(Maps.getInstance().getMap("first"));
         }
-    }
 
-    public void draw(Graphics g) {
         if (window != null) {
-            window.draw(g);
+            contentPane.add(window);
         }
+
     }
 
     public void loadMainMenu() {
