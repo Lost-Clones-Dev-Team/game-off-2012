@@ -1,6 +1,7 @@
 package lostclones.map.units;
 
 import lostclones.images.Sprite;
+import lostclones.images.SpriteManager;
 
 public abstract class Unit {
 
@@ -16,8 +17,12 @@ public abstract class Unit {
     private int x;
     private int y;
 
-    private Sprite sprite;
+    private String sprite;
 
+    public Unit(int newX, int newY) {
+        x = newX;
+        y = newY;
+    }
 
     public void setAttackRadius(int newAttackRadius) {
         if (newAttackRadius >= 0) {
@@ -105,12 +110,12 @@ public abstract class Unit {
         return curAP;
     }
 
-    public void setSprite(Sprite newSprite) {
+    public void setSprite(String newSprite) {
         sprite = newSprite;
     }
 
     public Sprite getSprite() {
-        return sprite;
+        return SpriteManager.getInstance().getSprite(sprite);
     }
 
 }

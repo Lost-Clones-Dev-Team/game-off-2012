@@ -17,6 +17,7 @@ public class LCMap {
     private int curYOffset;
 
     public LCMap(int newWidth, int newHeight) {
+        units = new ArrayList<Unit>();
         width = newWidth;
         height = newHeight;
         curXTile = 0;
@@ -78,6 +79,18 @@ public class LCMap {
 
     public int getCurYOffset() {
         return curYOffset;
+    }
+
+    public void addUnit(Unit unit) {
+        units.add(unit);
+    }
+
+    public void removeUnit(Unit unit) {
+        units.remove(unit);
+    }
+
+    public ArrayList<Unit> getUnits() {
+        return units;
     }
 
     public void moveLeft(int amount) {
