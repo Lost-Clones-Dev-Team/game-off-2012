@@ -2,10 +2,6 @@ package lostclones.window;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -14,7 +10,7 @@ import lostclones.map.Tile;
 import lostclones.map.structures.Structure;
 import lostclones.map.units.Unit;
 
-public class GameMap extends Window implements KeyListener, MouseListener {
+public class GameMap extends Window {
 
     private static final long serialVersionUID = 310643392951253204L;
 
@@ -23,8 +19,15 @@ public class GameMap extends Window implements KeyListener, MouseListener {
     private int mapWidth = 20;
     private int mapHeight = 16;
 
+    private GameMapActionListener actionListener;
+
     public GameMap(LCMap newMap) {
         setMap(newMap);
+        setFocusable(true);
+        actionListener = new GameMapActionListener();
+        addKeyListener(actionListener);
+        addMouseListener(actionListener);
+        addMouseMotionListener(actionListener);
     }
 
     public void setMap(LCMap newMap) {
@@ -94,54 +97,5 @@ public class GameMap extends Window implements KeyListener, MouseListener {
             g.drawImage(buffer, 0, 0, null);
             graphics2D.dispose();
         }
-
-    }
-
-    @Override
-    public void keyPressed(KeyEvent arg0) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void keyReleased(KeyEvent arg0) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void keyTyped(KeyEvent arg0) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent arg0) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent arg0) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent arg0) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void mousePressed(MouseEvent arg0) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent arg0) {
-        // TODO Auto-generated method stub
-
     }
 }

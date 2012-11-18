@@ -36,7 +36,6 @@ public class LostClonesApplet extends JApplet implements Runnable{
 
     @Override
     public void run() {
-        int times = 0;
         // thread info
         while(true) {
 
@@ -45,13 +44,6 @@ public class LostClonesApplet extends JApplet implements Runnable{
                 Thread.sleep(1000/FPS);
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            }
-            times ++;
-
-            if (times > 20) {
-                Maps.getInstance().getMap("first").moveRight(1);
-                Maps.getInstance().getMap("first").moveDown(1);
-                times = 0;
             }
         }
     }

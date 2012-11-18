@@ -128,18 +128,18 @@ public class LCMap {
     }
 
     public void moveUp(int amount) {
-        curYOffset -= amount;
-        if (curYOffset < 0) {
-            curYOffset += 32;
-            curYTile ++;
-        }
-    }
-
-    public void moveDown(int amount) {
         curYOffset += amount;
         if (curYOffset > 32) {
             curYOffset -= 32;
             curYTile --;
+        }
+    }
+
+    public void moveDown(int amount) {
+        curYOffset -= amount;
+        if (curYOffset < 0) {
+            curYOffset += 32;
+            curYTile ++;
         }
     }
 }
