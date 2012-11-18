@@ -2,12 +2,14 @@ package lostclones.map;
 
 import java.util.ArrayList;
 
+import lostclones.map.structures.Structure;
 import lostclones.map.units.Unit;
 
 public class LCMap {
     private Tile[][] map;
 
     private ArrayList<Unit> units;
+    private ArrayList<Structure> structures;
 
     private int width;
     private int height;
@@ -18,6 +20,7 @@ public class LCMap {
 
     public LCMap(int newWidth, int newHeight) {
         units = new ArrayList<Unit>();
+        structures = new ArrayList<Structure>();
         width = newWidth;
         height = newHeight;
         curXTile = 0;
@@ -86,13 +89,28 @@ public class LCMap {
     }
 
     public void removeUnit(Unit unit) {
-        units.remove(unit);
+        if (units.contains(unit)) {
+            units.remove(unit);
+        }
     }
 
     public ArrayList<Unit> getUnits() {
         return units;
     }
 
+    public void addStructure(Structure structure) {
+        structures.add(structure);
+    }
+
+    public void removeStructure(Structure structure) {
+        if (structures.contains(structure)) {
+            structures.remove(structure);
+        }
+    }
+
+    public ArrayList<Structure> getStructures() {
+        return structures;
+    }
     public void moveLeft(int amount) {
         curXOffset += amount;
         if (curXOffset > 32) {

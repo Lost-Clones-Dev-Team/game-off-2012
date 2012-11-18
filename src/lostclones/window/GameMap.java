@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import lostclones.map.LCMap;
 import lostclones.map.Tile;
+import lostclones.map.structures.Structure;
 import lostclones.map.units.Unit;
 
 public class GameMap extends Window implements KeyListener, MouseListener {
@@ -61,6 +62,19 @@ public class GameMap extends Window implements KeyListener, MouseListener {
                             graphics2D.drawImage(image, ((i-curX)*32)+offX, ((j-curY)*32)+offY, null);
                         }
                     }
+                }
+            }
+
+            ArrayList<Structure> structures = map.getStructures();
+            for(Structure s : structures) {
+                int x = s.getX();
+                int y = s.getY();
+
+                if (x >= left &&  x < right && y >= top && y < bot) {
+                    int drawX = x - curX;
+                    int drawY = y - curY;
+                    BufferedImage image = s.getSprite().getImage();
+                    graphics2D.drawImage(image, (drawX*32)+offX, (drawY*32)+offY, null);
                 }
             }
 
