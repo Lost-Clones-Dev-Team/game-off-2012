@@ -53,6 +53,12 @@ public class LostClonesApplet extends JApplet implements Runnable{
                 Maps.getInstance().getMap("first").setTile(5, 5, new Tile("grass2", 5, 5));
                 Maps.getInstance().getMap("first").setTile(6, 5, new Tile("grass2", 6, 5));
             }
+
+            if (times > 20) {
+                Maps.getInstance().getMap("first").moveRight(1);
+                Maps.getInstance().getMap("first").moveDown(1);
+                times = 0;
+            }
         }
     }
 

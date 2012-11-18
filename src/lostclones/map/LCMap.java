@@ -11,14 +11,18 @@ public class LCMap {
 
     private int width;
     private int height;
-    private int curXPos;
-    private int curYPos;
+    private int curXTile;
+    private int curYTile;
+    private int curXOffset;
+    private int curYOffset;
 
     public LCMap(int newWidth, int newHeight) {
         width = newWidth;
         height = newHeight;
-        curXPos = 0;
-        curYPos = 0;
+        curXTile = 0;
+        curYTile = 0;
+        curXOffset = 0;
+        curYOffset = 0;
         map = new Tile[width][height];
     }
 
@@ -44,19 +48,67 @@ public class LCMap {
         return height;
     }
 
-    public void setCurXPos(int newXPos) {
-        curXPos = newXPos;
+    public void setCurXTile(int newXTile) {
+        curXTile = newXTile;
     }
 
-    public int getCurXPos() {
-        return curXPos;
+    public int getCurXTile() {
+        return curXTile;
     }
 
-    public void setCurYPos(int newYPos) {
-        curYPos = newYPos;
+    public void setCurYTile(int newYTile) {
+        curYTile = newYTile;
     }
 
-    public int getCurYPos() {
-        return curYPos;
+    public int getCurYTile() {
+        return curYTile;
+    }
+
+    public void setCurXOffset(int newXOffset) {
+        curXOffset = newXOffset;
+    }
+
+    public int getCurXOffset() {
+        return curXOffset;
+    }
+
+    public void setCurYOffset(int newYOffset) {
+        curYOffset = newYOffset;
+    }
+
+    public int getCurYOffset() {
+        return curYOffset;
+    }
+
+    public void moveLeft(int amount) {
+        curXOffset += amount;
+        if (curXOffset > 32) {
+            curXOffset -= 32;
+            curXTile --;
+        }
+    }
+
+    public void moveRight(int amount) {
+        curXOffset -= amount;
+        if (curXOffset < 0) {
+            curXOffset += 32;
+            curXTile ++;
+        }
+    }
+
+    public void moveUp(int amount) {
+        curYOffset -= amount;
+        if (curYOffset < 0) {
+            curYOffset += 32;
+            curYTile ++;
+        }
+    }
+
+    public void moveDown(int amount) {
+        curYOffset += amount;
+        if (curYOffset > 32) {
+            curYOffset -= 32;
+            curYTile --;
+        }
     }
 }

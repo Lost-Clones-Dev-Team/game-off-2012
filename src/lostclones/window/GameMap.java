@@ -35,17 +35,19 @@ public class GameMap extends Window{
             graphics2D.clearRect(0, 0, mapWidth*32, mapHeight*32);
 
 
-            int curX = map.getCurXPos();
-            int curY = map.getCurYPos();
+            int curX = map.getCurXTile();
+            int curY = map.getCurYTile();
 
-            for (int i = curX; i < curX + mapWidth; i ++) {
-                for (int j = curY; j < curY + mapHeight; j++) {
+            int offX = map.getCurXOffset();
+            int offY = map.getCurYOffset();
 
+            for (int i = curX - 1; i < curX + mapWidth; i ++) {
+                for (int j = curY - 1; j < curY + mapHeight; j++) {
                     Tile tile = map.getTile(i, j);
                     if (tile != null) {
                         BufferedImage image = tile.getSprite().getImage();
                         if (image != null) {
-                            graphics2D.drawImage(image, (i-curX)*32, (j-curY)*32, null);
+                            graphics2D.drawImage(image, ((i-curX)*32)+offX, ((j-curY)*32)+offY, null);
                         }
                     }
                 }
