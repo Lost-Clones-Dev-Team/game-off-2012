@@ -6,6 +6,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+import lostclones.map.LCMap;
 import lostclones.map.Maps;
 
 public class GameMapActionListener implements KeyListener, MouseListener, MouseMotionListener{
@@ -45,7 +46,20 @@ public class GameMapActionListener implements KeyListener, MouseListener, MouseM
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        System.out.println("Mouse clicked");
+        int mouseX = e.getX();
+        int mouseY = e.getY();
+
+        LCMap map = Maps.getInstance().getMap("first");
+        int xTile = map.getCurXTile();
+        int yTile = map.getCurYTile();
+        int offX = map.getCurXOffset();
+        int offY = map.getCurYOffset();
+
+        int mouseTileX = (int) Math.floor((mouseX - offX) / 32) + xTile;
+        int mouseTileY = (int) Math.floor((mouseY - offY) / 32) + yTile;
+
+        map.toggleSelectTile(mouseTileX, mouseTileY);
+
     }
 
     @Override
@@ -69,12 +83,12 @@ public class GameMapActionListener implements KeyListener, MouseListener, MouseM
     }
 
     @Override
-    public void mouseDragged(MouseEvent arg0) {
+    public void mouseDragged(MouseEvent e) {
 
     }
 
     @Override
-    public void mouseMoved(MouseEvent arg0) {
+    public void mouseMoved(MouseEvent e) {
 
     }
 

@@ -142,4 +142,17 @@ public class LCMap {
             curYTile ++;
         }
     }
+
+    public void toggleSelectTile(int tileX, int tileY) {
+        for (Unit u : units) {
+            if (tileX == u.getX() && tileY == u.getY()) {
+                boolean selected = u.isSelected();
+                if (selected) {
+                    u.setSelected(false);
+                } else {
+                    u.setSelected(true);
+                }
+            }
+        }
+    }
 }

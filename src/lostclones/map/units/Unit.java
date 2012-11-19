@@ -18,6 +18,7 @@ public abstract class Unit {
     private int y;
 
     private String sprite;
+    private boolean selected = false;
 
     //private String owner;
 
@@ -118,6 +119,14 @@ public abstract class Unit {
 
     public Sprite getSprite() {
         return SpriteManager.getInstance().getSprite(sprite);
+    }
+
+    public void setSelected(boolean isSelected) {
+        selected = isSelected;
+    }
+
+    public boolean isSelected() {
+        return selected;
     }
 
 }

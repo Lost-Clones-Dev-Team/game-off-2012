@@ -28,6 +28,7 @@ public class Maps {
         sm.setSprite("grass2", new Sprite("general", 1, 0));
         sm.setSprite("unit1", new Sprite("general", 2, 0));
         sm.setSprite("road", new Sprite("general", 3, 0));
+        sm.setSprite("selected", new Sprite("general", 0, 1));
 
 
         LCMap map1 = new LCMap(32,32);

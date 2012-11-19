@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import lostclones.images.SpriteManager;
 import lostclones.map.LCMap;
 import lostclones.map.Tile;
 import lostclones.map.structures.Structure;
@@ -91,6 +92,11 @@ public class GameMap extends Window {
                     int drawY = y - curY;
                     BufferedImage image = u.getSprite().getImage();
                     graphics2D.drawImage(image, (drawX*32)+offX, (drawY*32)+offY, null);
+
+                    BufferedImage selectedImage = SpriteManager.getInstance().getSprite("selected").getImage();
+                    if (u.isSelected()) {
+                        graphics2D.drawImage(selectedImage, (drawX*32)+offX, (drawY*32)+offY, null);
+                    }
                 }
             }
             g.clearRect(0, 0, mapWidth*32, mapHeight*32);
