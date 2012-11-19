@@ -8,6 +8,7 @@ import lostclones.images.Texture;
 import lostclones.images.TextureManager;
 import lostclones.map.structures.Road;
 import lostclones.map.units.Pawn;
+import lostclones.players.Player;
 
 public class Maps {
     private static final Maps instance = new Maps();
@@ -42,10 +43,17 @@ public class Maps {
             }
         }
 
-        map1.addStructure(new Road(3,4));
-        map1.addStructure(new Road(3,5));
-        map1.addUnit(new Pawn(3,4));
-        map1.addUnit(new Pawn(14,12));
+        Player human = new Player();
+        Player neutral = new Player();
+        Player ai1 = new Player();
+        map1.addPlayer(human);
+        map1.addPlayer(neutral);
+        map1.addPlayer(ai1);
+
+        neutral.addStructure(new Road(3,4));
+        neutral.addStructure(new Road(3,5));
+        human.addUnit(new Pawn(3,4));
+        ai1.addUnit(new Pawn(14,12));
 
         maps.put("first", map1);
     }

@@ -2,14 +2,14 @@ package lostclones.map;
 
 import java.util.ArrayList;
 
-import lostclones.map.structures.Structure;
 import lostclones.map.units.Unit;
+import lostclones.players.Player;
 
 public class LCMap {
     private Tile[][] map;
 
-    private ArrayList<Unit> units;
-    private ArrayList<Structure> structures;
+    private ArrayList<Player> players;
+    private Unit selectedUnit;
 
     private int width;
     private int height;
@@ -19,8 +19,7 @@ public class LCMap {
     private int curYOffset;
 
     public LCMap(int newWidth, int newHeight) {
-        units = new ArrayList<Unit>();
-        structures = new ArrayList<Structure>();
+        players = new ArrayList<Player>();
         width = newWidth;
         height = newHeight;
         curXTile = 0;
@@ -84,32 +83,18 @@ public class LCMap {
         return curYOffset;
     }
 
-    public void addUnit(Unit unit) {
-        units.add(unit);
+    public void addPlayer(Player player) {
+        players.add(player);
     }
 
-    public void removeUnit(Unit unit) {
-        if (units.contains(unit)) {
-            units.remove(unit);
+    public void removePlayer(Player player) {
+        if (players.contains(player)) {
+            players.remove(player);
         }
     }
 
-    public ArrayList<Unit> getUnits() {
-        return units;
-    }
-
-    public void addStructure(Structure structure) {
-        structures.add(structure);
-    }
-
-    public void removeStructure(Structure structure) {
-        if (structures.contains(structure)) {
-            structures.remove(structure);
-        }
-    }
-
-    public ArrayList<Structure> getStructures() {
-        return structures;
+    public ArrayList<Player> getPlayers() {
+        return players;
     }
     public void moveLeft(int amount) {
         curXOffset += amount;
@@ -144,15 +129,25 @@ public class LCMap {
     }
 
     public void toggleSelectTile(int tileX, int tileY) {
-        for (Unit u : units) {
-            if (tileX == u.getX() && tileY == u.getY()) {
-                boolean selected = u.isSelected();
-                if (selected) {
-                    u.setSelected(false);
-                } else {
-                    u.setSelected(true);
+        for (Player p : players) {
+            ArrayList<Unit> units = p.getUnits();
+            for (Unit u : units) {
+                if (tileX == u.getX() && tileY == u.getY()) {
+                    if (u.equals(selectedUnit)) {
+                        selectedUnit = null;
+                    } else {
+                        selectedUnit = u;
+                    }
                 }
             }
         }
+    }
+
+    public void setSelectedUnit(Unit unit) {
+        selectedUnit = unit;
+    }
+
+    public Unit getSelectedUnit() {
+        return selectedUnit;
     }
 }

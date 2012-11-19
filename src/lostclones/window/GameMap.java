@@ -10,6 +10,7 @@ import lostclones.map.LCMap;
 import lostclones.map.Tile;
 import lostclones.map.structures.Structure;
 import lostclones.map.units.Unit;
+import lostclones.players.Player;
 
 public class GameMap extends Window {
 
@@ -69,36 +70,51 @@ public class GameMap extends Window {
                 }
             }
 
-            ArrayList<Structure> structures = map.getStructures();
-            for(Structure s : structures) {
-                int x = s.getX();
-                int y = s.getY();
+            ArrayList<Player> players = map.getPlayers();
 
-                if (x >= left &&  x < right && y >= top && y < bot) {
-                    int drawX = x - curX;
-                    int drawY = y - curY;
-                    BufferedImage image = s.getSprite().getImage();
-                    graphics2D.drawImage(image, (drawX*32)+offX, (drawY*32)+offY, null);
-                }
-            }
+            for (Player p : players) {
+                ArrayList<Structure> structures = p.getStructures();
+                for(Structure s : structures) {
+                    int x = s.getX();
+                    int y = s.getY();
 
-            ArrayList<Unit> units = map.getUnits();
-            for(Unit u : units) {
-                int x = u.getX();
-                int y = u.getY();
-
-                if (x >= left &&  x < right && y >= top && y < bot) {
-                    int drawX = x - curX;
-                    int drawY = y - curY;
-                    BufferedImage image = u.getSprite().getImage();
-                    graphics2D.drawImage(image, (drawX*32)+offX, (drawY*32)+offY, null);
-
-                    BufferedImage selectedImage = SpriteManager.getInstance().getSprite("selected").getImage();
-                    if (u.isSelected()) {
-                        graphics2D.drawImage(selectedImage, (drawX*32)+offX, (drawY*32)+offY, null);
+                    if (x >= left &&  x < right && y >= top && y < bot) {
+                        int drawX = x - curX;
+                        int drawY = y - curY;
+                        BufferedImage image = s.getSprite().getImage();
+                        graphics2D.drawImage(image, (drawX*32)+offX, (drawY*32)+offY, null);
                     }
                 }
             }
+
+            for (Player p : players) {
+                ArrayList<Unit> units = p.getUnits();
+                for(Unit u : units) {
+                    int x = u.getX();
+                    int y = u.getY();
+
+                    if (x >= left &&  x < right && y >= top && y < bot) {
+                        int drawX = x - curX;
+                        int drawY = y - curY;
+                        BufferedImage image = u.getSprite().getImage();
+                        graphics2D.drawImage(image, (drawX*32)+offX, (drawY*32)+offY, null);
+                    }
+                }
+            }
+
+            BufferedImage selectedImage = SpriteManager.getInstance().getSprite("selected").getImage();
+            Unit selectedUnit = map.getSelectedUnit();
+            if (selectedUnit != null) {
+                int x = selectedUnit.getX();
+                int y = selectedUnit.getY();
+                if (x >= left &&  x < right && y >= top && y < bot) {
+                    int drawX = x - curX;
+                    int drawY = y - curY;
+                    graphics2D.drawImage(selectedImage, (drawX*32)+offX, (drawY*32)+offY, null);
+                }
+            }
+
+
             g.clearRect(0, 0, mapWidth*32, mapHeight*32);
             g.drawImage(buffer, 0, 0, null);
             graphics2D.dispose();
