@@ -10,7 +10,6 @@ public abstract class Structure {
     private String sprite;
 
     private boolean walkable;
-    //private String owner;
 
     public Structure(int newX, int newY) {
         x = newX;

@@ -107,10 +107,20 @@ public class GameMap extends Window {
             if (selectedUnit != null) {
                 int x = selectedUnit.getX();
                 int y = selectedUnit.getY();
+                int drawX = x - curX;
+                int drawY = y - curY;
                 if (x >= left &&  x < right && y >= top && y < bot) {
-                    int drawX = x - curX;
-                    int drawY = y - curY;
                     graphics2D.drawImage(selectedImage, (drawX*32)+offX, (drawY*32)+offY, null);
+                }
+
+                BufferedImage selectedMove = SpriteManager.getInstance().getSprite("selectedMove").getImage();
+                int curAP = selectedUnit.getCurAP();
+                while (curAP > 0) {
+                    graphics2D.drawImage(selectedMove, ((drawX-curAP)*32)+offX, (drawY*32)+offY, null);
+                    graphics2D.drawImage(selectedMove, ((drawX+curAP)*32)+offX, (drawY*32)+offY, null);
+                    graphics2D.drawImage(selectedMove, (drawX*32)+offX, ((drawY-curAP)*32)+offY, null);
+                    graphics2D.drawImage(selectedMove, (drawX*32)+offX, ((drawY+curAP)*32)+offY, null);
+                    curAP --;
                 }
             }
 

@@ -19,8 +19,6 @@ public abstract class Unit {
 
     private String sprite;
 
-    //private String owner;
-
     public Unit(int newX, int newY) {
         x = newX;
         y = newY;
