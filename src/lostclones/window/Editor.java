@@ -2,8 +2,14 @@ package lostclones.window;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+
+import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
 
 import lostclones.images.SpriteManager;
 import lostclones.map.LCMap;
@@ -12,24 +18,58 @@ import lostclones.map.structures.Structure;
 import lostclones.map.units.Unit;
 import lostclones.players.Player;
 
-public class GameMap extends Window {
+public class Editor extends Window{
 
-    private static final long serialVersionUID = 310643392951253204L;
-
+    private static final long serialVersionUID = 3890033735108549030L;
     private LCMap map;
     private BufferedImage buffer;
-    private int mapWidth = 20;
+    private int mapWidth = 18;
     private int mapHeight = 16;
 
-    private GameMapActionListener actionListener;
+    private EditorActionListener actionListener;
 
-    public GameMap(LCMap newMap) {
-        actionListener = new GameMapActionListener();
+    private String lastAction = "sprite";
+    private String selectedSprite;
+    private JLabel textureIcon;
+
+    public Editor(LCMap newMap) {
+        actionListener = new EditorActionListener(this);
         setMap(newMap);
         setFocusable(true);
+
+        setupWindow();
+
         addKeyListener(actionListener);
         addMouseListener(actionListener);
         addMouseMotionListener(actionListener);
+    }
+
+    private void setupWindow() {
+        setLayout(null);
+
+        String[] sprites = SpriteManager.getInstance().getAllSpriteNames();
+
+        JComboBox spritesDropdown = new JComboBox(sprites);
+        spritesDropdown.setSize(140, 20);
+        spritesDropdown.setLocation(590, 10);
+        spritesDropdown.setFocusable(false);
+        spritesDropdown.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JComboBox dropdown = (JComboBox) e.getSource();
+                String selection = (String) dropdown.getSelectedItem();
+                textureIcon.setIcon(new ImageIcon(SpriteManager.getInstance().getSprite(selection).getImage()));
+                lastAction = "sprite";
+                selectedSprite = selection;
+            }
+        });
+        add(spritesDropdown);
+        selectedSprite = sprites[0];
+        textureIcon = new JLabel(new ImageIcon(SpriteManager.getInstance().getSprite(selectedSprite).getImage()));
+        textureIcon.setSize(32,32);
+        textureIcon.setLocation(760,0);
+        add(textureIcon);
+
     }
 
     public void setMap(LCMap newMap) {
@@ -130,5 +170,13 @@ public class GameMap extends Window {
             g.drawImage(buffer, 0, 0, null);
             graphics2D.dispose();
         }
+    }
+
+    public String getLastAction() {
+        return lastAction;
+    }
+
+    public String getSelectedSprite() {
+        return selectedSprite;
     }
 }
