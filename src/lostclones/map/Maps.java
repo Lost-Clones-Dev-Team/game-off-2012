@@ -45,9 +45,9 @@ public class Maps {
             }
         }
 
-        Player human = new Player();
-        Player neutral = new Player();
-        Player ai1 = new Player();
+        Player human = new Player("human1");
+        Player neutral = new Player("neutral");
+        Player ai1 = new Player("ai1");
         map1.addPlayer(human);
         map1.addPlayer(neutral);
         map1.addPlayer(ai1);

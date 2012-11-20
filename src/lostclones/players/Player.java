@@ -10,10 +10,12 @@ public class Player {
 
     private ArrayList<Unit> units;
     private ArrayList<Structure> structures;
+    private String name;
 
     private AI ai;
 
-    public Player() {
+    public Player(String newName) {
+        name = newName;
         units = new ArrayList<Unit>();
         structures = new ArrayList<Structure>();
     }
@@ -56,5 +58,13 @@ public class Player {
 
     public boolean hasAI() {
         return ai != null;
+    }
+
+    public void setName(String newName) {
+        name = newName;
+    }
+
+    public String getName() {
+        return name;
     }
 }

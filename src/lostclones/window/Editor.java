@@ -30,6 +30,7 @@ public class Editor extends Window{
 
     private String lastAction = "sprite";
     private String selectedSprite;
+    private String selectedPlayer;
     private JLabel spriteIcon;
 
     public Editor(LCMap newMap) {
@@ -51,7 +52,7 @@ public class Editor extends Window{
 
         JComboBox spritesDropdown = new JComboBox(sprites);
         spritesDropdown.setSize(140, 20);
-        spritesDropdown.setLocation(590, 10);
+        spritesDropdown.setLocation(590, 25);
         spritesDropdown.setFocusable(false);
         spritesDropdown.addActionListener(new ActionListener() {
             @Override
@@ -64,12 +65,39 @@ public class Editor extends Window{
             }
         });
         add(spritesDropdown);
+
+        JLabel spritesText = new JLabel("Sprites:");
+        spritesText.setLocation(590, 0);
+        spritesText.setSize(100, 20);
+        add(spritesText);
+
         selectedSprite = sprites[0];
         spriteIcon = new JLabel(new ImageIcon(SpriteManager.getInstance().getSprite(selectedSprite).getImage()));
         spriteIcon.setSize(32,32);
-        spriteIcon.setLocation(760,0);
+        spriteIcon.setLocation(750,15);
         add(spriteIcon);
 
+
+        JLabel playerText = new JLabel("Players:");
+        playerText.setLocation(590, 70);
+        playerText.setSize(100, 20);
+        add(playerText);
+
+        String[] players = map.getListOfPlayers();
+        selectedPlayer = players[0];
+        JComboBox playersDropdown = new JComboBox(players);
+        playersDropdown.setSize(140, 20);
+        playersDropdown.setLocation(590, 95);
+        playersDropdown.setFocusable(false);
+        playersDropdown.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JComboBox dropdown = (JComboBox) e.getSource();
+                String selection = (String) dropdown.getSelectedItem();
+                selectedPlayer = selection;
+            }
+        });
+        add(playersDropdown);
     }
 
     public void setMap(LCMap newMap) {
@@ -178,5 +206,9 @@ public class Editor extends Window{
 
     public String getSelectedSprite() {
         return selectedSprite;
+    }
+
+    public String getSelectedPlayer() {
+        return selectedPlayer;
     }
 }
