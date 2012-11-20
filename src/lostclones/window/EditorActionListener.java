@@ -22,18 +22,23 @@ public class EditorActionListener implements KeyListener, MouseListener, MouseMo
     @Override
     public void keyPressed(KeyEvent e) {
 
+        int scrollspeed = 16;
         switch (e.getKeyCode()) {
             case KeyEvent.VK_LEFT:
-                map.moveLeft(8);
+            case KeyEvent.VK_A:
+                map.moveLeft(scrollspeed);
                 break;
             case KeyEvent.VK_RIGHT:
-                map.moveRight(8);
+            case KeyEvent.VK_D:
+                map.moveRight(scrollspeed);
                 break;
             case KeyEvent.VK_UP:
-                map.moveUp(8);
+            case KeyEvent.VK_W:
+                map.moveUp(scrollspeed);
                 break;
             case KeyEvent.VK_DOWN:
-                map.moveDown(8);
+            case KeyEvent.VK_S:
+                map.moveDown(scrollspeed);
                 break;
         }
     }
@@ -94,7 +99,25 @@ public class EditorActionListener implements KeyListener, MouseListener, MouseMo
 
     @Override
     public void mouseDragged(MouseEvent e) {
+        int mouseX = e.getX();
+        int mouseY = e.getY();
 
+        LCMap map = Maps.getInstance().getMap("first");
+        int xTile = map.getCurXTile();
+        int yTile = map.getCurYTile();
+        int offX = map.getCurXOffset();
+        int offY = map.getCurYOffset();
+
+        int mouseTileX = (int) Math.floor((mouseX - offX) / 32) + xTile;
+        int mouseTileY = (int) Math.floor((mouseY - offY) / 32) + yTile;
+
+        String lastAction = editor.getLastAction();
+        String selectedSprite = editor.getSelectedSprite();
+        if (lastAction.equals("sprite")) {
+            map.setTile(mouseTileX, mouseTileY, new Tile(selectedSprite, mouseTileX, mouseTileY));
+        } else {
+            map.toggleSelectTile(mouseTileX, mouseTileY);
+        }
     }
 
     @Override

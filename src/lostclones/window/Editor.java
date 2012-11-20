@@ -30,7 +30,7 @@ public class Editor extends Window{
 
     private String lastAction = "sprite";
     private String selectedSprite;
-    private JLabel textureIcon;
+    private JLabel spriteIcon;
 
     public Editor(LCMap newMap) {
         actionListener = new EditorActionListener(this);
@@ -58,17 +58,17 @@ public class Editor extends Window{
             public void actionPerformed(ActionEvent e) {
                 JComboBox dropdown = (JComboBox) e.getSource();
                 String selection = (String) dropdown.getSelectedItem();
-                textureIcon.setIcon(new ImageIcon(SpriteManager.getInstance().getSprite(selection).getImage()));
+                spriteIcon.setIcon(new ImageIcon(SpriteManager.getInstance().getSprite(selection).getImage()));
                 lastAction = "sprite";
                 selectedSprite = selection;
             }
         });
         add(spritesDropdown);
         selectedSprite = sprites[0];
-        textureIcon = new JLabel(new ImageIcon(SpriteManager.getInstance().getSprite(selectedSprite).getImage()));
-        textureIcon.setSize(32,32);
-        textureIcon.setLocation(760,0);
-        add(textureIcon);
+        spriteIcon = new JLabel(new ImageIcon(SpriteManager.getInstance().getSprite(selectedSprite).getImage()));
+        spriteIcon.setSize(32,32);
+        spriteIcon.setLocation(760,0);
+        add(spriteIcon);
 
     }
 

@@ -20,18 +20,23 @@ public class GameMapActionListener implements KeyListener, MouseListener, MouseM
     @Override
     public void keyPressed(KeyEvent e) {
 
+        int scrollspeed = 16;
         switch (e.getKeyCode()) {
             case KeyEvent.VK_LEFT:
-                map.moveLeft(8);
+            case KeyEvent.VK_A:
+                map.moveLeft(scrollspeed);
                 break;
             case KeyEvent.VK_RIGHT:
-                map.moveRight(8);
+            case KeyEvent.VK_D:
+                map.moveRight(scrollspeed);
                 break;
             case KeyEvent.VK_UP:
-                map.moveUp(8);
+            case KeyEvent.VK_W:
+                map.moveUp(scrollspeed);
                 break;
             case KeyEvent.VK_DOWN:
-                map.moveDown(8);
+            case KeyEvent.VK_S:
+                map.moveDown(scrollspeed);
                 break;
         }
     }
