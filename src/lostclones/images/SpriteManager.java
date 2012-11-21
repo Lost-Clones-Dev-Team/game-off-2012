@@ -33,4 +33,23 @@ public class SpriteManager {
         }
         return spriteNames;
     }
+
+    public String[] getAllTileNames() {
+        String[] spriteNames = getAllSpriteNames();
+        String[] tempNames = new String[spriteNames.length];
+        int i = 0;
+        for (String s : spriteNames) {
+            Sprite sprite = sprites.get(s);
+            if (sprite.getType().equals("tile")) {
+                tempNames[i] = s;
+                i ++;
+            }
+        }
+        String[] tileNames = new String[i];
+        for (int j = 0; j < i; j ++) {
+            tileNames[j] = tempNames[j];
+        }
+
+        return tileNames;
+    }
 }

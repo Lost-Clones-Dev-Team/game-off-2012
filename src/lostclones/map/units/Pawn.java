@@ -3,8 +3,8 @@ package lostclones.map.units;
 
 public class Pawn extends Unit{
 
-    public Pawn(int newX, int newY) {
-        super(newX, newY);
-        setSprite("unit1");
+    public Pawn(String newPlayer, int newX, int newY) {
+        super(newPlayer, newX, newY);
+        setSprite("pawn");
     }
 }

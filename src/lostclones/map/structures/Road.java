@@ -2,8 +2,8 @@ package lostclones.map.structures;
 
 public class Road extends Structure{
 
-    public Road(int newX, int newY) {
-        super(newX, newY);
+    public Road(String newPlayer, int newX, int newY) {
+        super(newPlayer, newX, newY);
         setSprite("road");
     }
 

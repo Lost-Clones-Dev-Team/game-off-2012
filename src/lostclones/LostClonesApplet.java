@@ -6,6 +6,8 @@ import javax.swing.JApplet;
 
 import lostclones.images.TextureManager;
 import lostclones.map.Maps;
+import lostclones.map.structures.StructureManager;
+import lostclones.map.units.UnitManager;
 import lostclones.window.WindowManager;
 
 public class LostClonesApplet extends JApplet implements Runnable{
@@ -20,6 +22,8 @@ public class LostClonesApplet extends JApplet implements Runnable{
 
     public void init() {
         TextureManager.getInstance().setApplet(this);
+        UnitManager.getInstance().setupUnits();
+        StructureManager.getInstance().setupStructures();
 
         setBackground(Color.WHITE);
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);

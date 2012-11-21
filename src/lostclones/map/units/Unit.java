@@ -18,8 +18,9 @@ public abstract class Unit {
     private int y;
 
     private String sprite;
+    private String player;
 
-    public Unit(int newX, int newY) {
+    public Unit(String newPlayer, int newX, int newY) {
         x = newX;
         y = newY;
     }
@@ -116,5 +117,13 @@ public abstract class Unit {
 
     public Sprite getSprite() {
         return SpriteManager.getInstance().getSprite(sprite);
+    }
+
+    public void setPlayer(String newPlayer) {
+        player = newPlayer;
+    }
+
+    public String getPlayer() {
+        return player;
     }
 }

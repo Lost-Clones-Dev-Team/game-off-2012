@@ -10,8 +10,10 @@ public abstract class Structure {
     private String sprite;
 
     private boolean walkable;
+    private String player;
 
-    public Structure(int newX, int newY) {
+    public Structure(String newPlayer, int newX, int newY) {
+        player = newPlayer;
         x = newX;
         y = newY;
         walkable = true;
@@ -47,5 +49,13 @@ public abstract class Structure {
 
     public boolean getWalkable() {
         return walkable;
+    }
+
+    public void setPlayer(String newPlayer) {
+        player = newPlayer;
+    }
+
+    public String getPlayer() {
+        return player;
     }
 }

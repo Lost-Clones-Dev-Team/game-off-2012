@@ -2,6 +2,7 @@ package lostclones.map;
 
 import java.util.ArrayList;
 
+import lostclones.map.structures.Structure;
 import lostclones.map.units.Unit;
 import lostclones.players.Player;
 
@@ -39,7 +40,9 @@ public class LCMap {
 
     public void setTile(int x, int y, Tile newTile) {
         if (newTile != null) {
-            map[x][y] = newTile;
+            if (x >= 0 && y >= 0 && x < width && y < height) {
+                map[x][y] = newTile;
+            }
         }
     }
 
@@ -138,17 +141,47 @@ public class LCMap {
         }
     }
 
-    public void toggleSelectTile(int tileX, int tileY) {
+    public Unit getUnit(int tileX, int tileY) {
+        Unit unit = null;
         for (Player p : players) {
             ArrayList<Unit> units = p.getUnits();
             for (Unit u : units) {
                 if (tileX == u.getX() && tileY == u.getY()) {
-                    if (u.equals(selectedUnit)) {
-                        selectedUnit = null;
-                    } else {
-                        selectedUnit = u;
-                    }
+                    unit = u;
+                    break;
                 }
+            }
+            if (unit != null) {
+                break;
+            }
+        }
+        return unit;
+    }
+
+    public Structure getStructure(int tileX, int tileY) {
+        Structure structure = null;
+        for (Player p : players) {
+            ArrayList<Structure> structures = p.getStructures();
+            for (Structure s : structures) {
+                if (tileX == s.getX() && tileY == s.getY()) {
+                    structure = s;
+                    break;
+                }
+            }
+            if (structure != null) {
+                break;
+            }
+        }
+        return structure;
+    }
+
+    public void toggleSelectTile(int tileX, int tileY) {
+        Unit u = getUnit(tileX, tileY);
+        if (u != null) {
+            if (u.equals(selectedUnit)) {
+                selectedUnit = null;
+            } else {
+                selectedUnit = u;
             }
         }
     }
@@ -159,5 +192,19 @@ public class LCMap {
 
     public Unit getSelectedUnit() {
         return selectedUnit;
+    }
+
+    public Player getPlayer(String playerName) {
+        Player player = null;
+
+        for (Player p : players) {
+            String name = p.getName();
+            if (name.equals(playerName)) {
+                player = p;
+                break;
+            }
+        }
+
+        return player;
     }
 }

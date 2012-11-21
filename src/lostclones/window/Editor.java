@@ -8,14 +8,18 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 import lostclones.images.SpriteManager;
 import lostclones.map.LCMap;
 import lostclones.map.Tile;
 import lostclones.map.structures.Structure;
+import lostclones.map.structures.StructureManager;
 import lostclones.map.units.Unit;
+import lostclones.map.units.UnitManager;
 import lostclones.players.Player;
 
 public class Editor extends Window{
@@ -31,7 +35,16 @@ public class Editor extends Window{
     private String lastAction = "sprite";
     private String selectedSprite;
     private String selectedPlayer;
+    private String selectedUnit;
+    private String selectedStructure;
     private JLabel spriteIcon;
+    private JLabel unitIcon;
+    private JLabel structureIcon;
+    private JTextField addPlayerText;
+    private JComboBox playersDropdown;
+    private JComboBox spritesDropdown;
+    private JComboBox unitsDropdown;
+    private JComboBox structuresDropdown;
 
     public Editor(LCMap newMap) {
         actionListener = new EditorActionListener(this);
@@ -47,18 +60,17 @@ public class Editor extends Window{
 
     private void setupWindow() {
         setLayout(null);
+        setFocusable(true);
+        String[] sprites = SpriteManager.getInstance().getAllTileNames();
 
-        String[] sprites = SpriteManager.getInstance().getAllSpriteNames();
-
-        JComboBox spritesDropdown = new JComboBox(sprites);
+        spritesDropdown = new JComboBox(sprites);
         spritesDropdown.setSize(140, 20);
         spritesDropdown.setLocation(590, 25);
         spritesDropdown.setFocusable(false);
         spritesDropdown.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JComboBox dropdown = (JComboBox) e.getSource();
-                String selection = (String) dropdown.getSelectedItem();
+                String selection = (String) spritesDropdown.getSelectedItem();
                 spriteIcon.setIcon(new ImageIcon(SpriteManager.getInstance().getSprite(selection).getImage()));
                 lastAction = "sprite";
                 selectedSprite = selection;
@@ -74,7 +86,7 @@ public class Editor extends Window{
         selectedSprite = sprites[0];
         spriteIcon = new JLabel(new ImageIcon(SpriteManager.getInstance().getSprite(selectedSprite).getImage()));
         spriteIcon.setSize(32,32);
-        spriteIcon.setLocation(750,15);
+        spriteIcon.setLocation(745,15);
         add(spriteIcon);
 
 
@@ -85,19 +97,125 @@ public class Editor extends Window{
 
         String[] players = map.getListOfPlayers();
         selectedPlayer = players[0];
-        JComboBox playersDropdown = new JComboBox(players);
+        playersDropdown = new JComboBox(players);
         playersDropdown.setSize(140, 20);
         playersDropdown.setLocation(590, 95);
         playersDropdown.setFocusable(false);
         playersDropdown.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JComboBox dropdown = (JComboBox) e.getSource();
-                String selection = (String) dropdown.getSelectedItem();
+                String selection = (String) playersDropdown.getSelectedItem();
                 selectedPlayer = selection;
+
             }
         });
         add(playersDropdown);
+
+        addPlayerText = new JTextField();
+        addPlayerText.setSize(140, 20);
+        addPlayerText.setLocation(590, 120);
+        add(addPlayerText);
+
+        JButton addPlayer = new JButton(new ImageIcon(SpriteManager.getInstance().getSprite("add").getImage()));
+        addPlayer.setSize(32, 32);
+        addPlayer.setLocation(745, 80);
+        addPlayer.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String newName = addPlayerText.getText();
+                newName = newName.trim();
+                addPlayerText.setText("");
+                requestFocus();
+
+                boolean same = false;
+                int itemCount = playersDropdown.getItemCount();
+                for (int i = 0; i < itemCount && !same; i ++) {
+                    String item = (String) playersDropdown.getItemAt(i);
+                    if (item.equals(newName)) {
+                        same = true;
+                    }
+                }
+                if (!same && !newName.equals("")) {
+                    Player player = new Player(newName);
+                    map.addPlayer(player);
+                    playersDropdown.addItem(newName);
+                }
+            }
+
+        });
+        add(addPlayer);
+
+        JButton removePlayer = new JButton(new ImageIcon(SpriteManager.getInstance().getSprite("remove").getImage()));
+        removePlayer.setSize(32, 32);
+        removePlayer.setLocation(745, 115);
+        removePlayer.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String name = (String) playersDropdown.getSelectedItem();
+                name = name.trim();
+                if (!name.equals("neutral")) {
+                    playersDropdown.removeItem(name);
+                }
+            }
+        });
+        add(removePlayer);
+
+        JLabel unitText = new JLabel("Units:");
+        unitText.setSize(100, 20);
+        unitText.setLocation(590, 155);
+        add(unitText);
+        String[] units = UnitManager.getInstance().getListOfUnits();
+        selectedUnit = units[0];
+        unitsDropdown = new JComboBox(units);
+        unitsDropdown.setSize(140, 20);
+        unitsDropdown.setLocation(590, 180);
+        unitsDropdown.setFocusable(false);
+        unitsDropdown.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String unitName =  (String) unitsDropdown.getSelectedItem();
+                lastAction = "unit";
+                selectedUnit = unitName;
+                Unit unit = UnitManager.getInstance().getUnit(selectedUnit);
+                unitIcon.setIcon(new ImageIcon(unit.getSprite().getImage()));
+            }
+        });
+        Unit unit = UnitManager.getInstance().getUnit(selectedUnit);
+        unitIcon = new JLabel(new ImageIcon(unit.getSprite().getImage()));
+        unitIcon.setSize(32,32);
+        unitIcon.setLocation(745,175);
+        add(unitIcon);
+
+        add(unitsDropdown);
+
+        JLabel structureText = new JLabel("Structures:");
+        structureText.setSize(100, 20);
+        structureText.setLocation(590, 220);
+        add(structureText);
+
+        String[] structures = StructureManager.getInstance().getListOfStructures();
+        selectedStructure = structures[0];
+        structuresDropdown = new JComboBox(structures);
+        structuresDropdown.setSize(140, 20);
+        structuresDropdown.setLocation(590, 245);
+        structuresDropdown.setFocusable(false);
+        structuresDropdown.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String structureName = (String) structuresDropdown.getSelectedItem();
+                lastAction = "structure";
+                selectedStructure = structureName;
+                Structure structure = StructureManager.getInstance().getStructure(selectedStructure);
+                structureIcon.setIcon(new ImageIcon(structure.getSprite().getImage()));
+            }
+        });
+        Structure structure = StructureManager.getInstance().getStructure(selectedStructure);
+        structureIcon = new JLabel(new ImageIcon(structure.getSprite().getImage()));
+        structureIcon.setSize(32, 32);
+        structureIcon.setLocation(745, 240);
+        add(structureIcon);
+
+        add(structuresDropdown);
     }
 
     public void setMap(LCMap newMap) {
@@ -210,5 +328,21 @@ public class Editor extends Window{
 
     public String getSelectedPlayer() {
         return selectedPlayer;
+    }
+
+    public String getSelectedUnit() {
+        return selectedUnit;
+    }
+
+    public String getSelectedStructure() {
+        return selectedStructure;
+    }
+
+    public int getMapWidth() {
+        return mapWidth;
+    }
+
+    public int getMapHeight() {
+        return mapHeight;
     }
 }
