@@ -51,4 +51,33 @@ public class TextureManager {
 
         return image;
     }
+
+    /* May come in handy later
+    public String[] getListOfImages() {
+        ArrayList<String> images = new ArrayList<String>();
+        InputStream test = applet.getClass().getClassLoader().getResourceAsStream("resources/images/");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(test));
+        String line;
+
+        try {
+            while ((line = reader.readLine()) != null) {
+                images.add(line);
+            }
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        try {
+            reader.close();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+
+        int size = images.size();
+        String[] convertedImages = new String[size];
+        for (int i = 0; i < size; i ++) {
+            convertedImages[i] = images.get(i);
+        }
+        return convertedImages;
+    }
+    */
 }

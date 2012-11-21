@@ -19,7 +19,8 @@ public class WindowManager {
         if (windowToLoad.equals("mainMenu")) {
             loadMainMenu();
         } else if (windowToLoad.equals("gameMap")) {
-            loadGameMap(Maps.getInstance().getMap("first"));
+            //loadGameMap(Maps.getInstance().getMap("first"));
+            loadEditor(Maps.getInstance().getMap("first"));
         }
 
         if (window != null) {
@@ -34,5 +35,9 @@ public class WindowManager {
 
     public void loadGameMap(LCMap newMap) {
         window = new GameMap(newMap);
+    }
+
+    public void loadEditor(LCMap newMap) {
+        window = new Editor(newMap);
     }
 }

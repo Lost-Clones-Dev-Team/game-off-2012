@@ -96,6 +96,16 @@ public class LCMap {
     public ArrayList<Player> getPlayers() {
         return players;
     }
+
+    public String[] getListOfPlayers() {
+        String[] playerList = new String[players.size()];
+        int i = 0;
+        for (Player p : players) {
+            playerList[i] = p.getName();
+            i ++;
+        }
+        return playerList;
+    }
     public void moveLeft(int amount) {
         curXOffset += amount;
         if (curXOffset > 32) {

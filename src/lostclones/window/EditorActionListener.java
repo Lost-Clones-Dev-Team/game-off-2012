@@ -8,13 +8,15 @@ import java.awt.event.MouseMotionListener;
 
 import lostclones.map.LCMap;
 import lostclones.map.Maps;
+import lostclones.map.Tile;
 
-public class GameMapActionListener implements KeyListener, MouseListener, MouseMotionListener{
+public class EditorActionListener implements KeyListener, MouseListener, MouseMotionListener{
 
     private LCMap map;
+    private Editor editor;
 
-    public GameMapActionListener() {
-
+    public EditorActionListener(Editor newEditor) {
+        editor = newEditor;
     }
 
     @Override
@@ -65,7 +67,13 @@ public class GameMapActionListener implements KeyListener, MouseListener, MouseM
         int mouseTileX = (int) Math.floor((mouseX - offX) / 32) + xTile;
         int mouseTileY = (int) Math.floor((mouseY - offY) / 32) + yTile;
 
-        map.toggleSelectTile(mouseTileX, mouseTileY);
+        String lastAction = editor.getLastAction();
+        String selectedSprite = editor.getSelectedSprite();
+        if (lastAction.equals("sprite")) {
+            map.setTile(mouseTileX, mouseTileY, new Tile(selectedSprite, mouseTileX, mouseTileY));
+        } else {
+            map.toggleSelectTile(mouseTileX, mouseTileY);
+        }
 
     }
 
@@ -91,7 +99,25 @@ public class GameMapActionListener implements KeyListener, MouseListener, MouseM
 
     @Override
     public void mouseDragged(MouseEvent e) {
+        int mouseX = e.getX();
+        int mouseY = e.getY();
 
+        LCMap map = Maps.getInstance().getMap("first");
+        int xTile = map.getCurXTile();
+        int yTile = map.getCurYTile();
+        int offX = map.getCurXOffset();
+        int offY = map.getCurYOffset();
+
+        int mouseTileX = (int) Math.floor((mouseX - offX) / 32) + xTile;
+        int mouseTileY = (int) Math.floor((mouseY - offY) / 32) + yTile;
+
+        String lastAction = editor.getLastAction();
+        String selectedSprite = editor.getSelectedSprite();
+        if (lastAction.equals("sprite")) {
+            map.setTile(mouseTileX, mouseTileY, new Tile(selectedSprite, mouseTileX, mouseTileY));
+        } else {
+            map.toggleSelectTile(mouseTileX, mouseTileY);
+        }
     }
 
     @Override

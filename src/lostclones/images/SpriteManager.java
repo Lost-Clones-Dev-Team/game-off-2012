@@ -23,4 +23,14 @@ public class SpriteManager {
         }
         sprites.put(spriteName, sprite);
     }
+
+    public String[] getAllSpriteNames() {
+        String[] spriteNames = new String[sprites.keySet().size()];
+        int i = 0;
+        for (String key : sprites.keySet()) {
+            spriteNames[i] = key;
+            i ++;
+        }
+        return spriteNames;
+    }
 }
